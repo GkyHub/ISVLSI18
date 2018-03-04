@@ -1,0 +1,29 @@
+\begin{table}[htbp]
+  \centering
+  \caption{Example energy breakdown for a pair of SRAM and RRAM design}
+  \vspace{-5pt}
+    \begin{tabular}{|r|R{1cm}|r|R{1cm}|r|}
+    \hline
+          & \multicolumn{2}{c|}{RRAM weight buffer} & \multicolumn{2}{c|}{SRAM weight buffer} \\
+    \hline
+    read iobuf & 0.29  & 0.01\% & 0.29  & 0.01\% \\
+    \hline
+    read weight & 2119  & 40.50\% & 383   & 10.85\% \\
+    \hline
+    read ddr & 841   & 16.10\% & 929   & 26.34\% \\
+    \hline
+    write iobuf & 1.04  & 0.02\% & 1.04  & 0.03\% \\
+    \hline
+    write weight & 50.4  & 0.96\% & 0.64  & 0.02\% \\
+    \hline
+    write ddr & 2.08  & 0.04\% & 2.08  & 0.06\% \\
+    \hline
+    standby & 1691  & 32.33\% & 1686  & 47.79\% \\
+    \hline
+    calculate & 526   & 10.05\% & 526   & 14.90\% \\
+    \hline
+    Total & 5230  &       & 3527  &\\
+    \hline
+    \end{tabular}%
+  \label{tab:ene_comp}%
+\end{table}%

@@ -1,0 +1,27 @@
+\section{Introduction}
+
+Convolutional Neural Network (CNN) has become a state-of-the-art algorithm for a wide range of applications like image classification~\cite{simonyan2014very}\cite{he2015deep} , object detection~\cite{redmon2015you} and other image based tasks. Compared with traditional hand-crafted feature based methods, CNN introduces a uniform model for different tasks and adjusts the model based on different training data set. Thus CNN can be adopted in different tasks and keeps high classification accuracy or detection accuracy.
+
+But CNN is still not widely applied in real applications because of its high computation and memory complexity. A typical network like AlexNet~\cite{krizhevsky2012imagenet} consists of more than 240MB parameters and 1.4GFLOPs for the inference of a single $224\times 224$ image. More advanced networks~\cite{simonyan2014very}\cite{he2015deep} requires much more computation and memory than AlexNet. The energy cost for CNN computation is thus high, especially on traditional platforms like CPU.
+
+Various works explore energy efficient hardware designs for CNN accelerators. One kind of researches base on CMOS technology and focus on efficient data path and memory system designs, for example the data tiling strategy in~\cite{zhang2015optimizing} and the convolution kernel in~\cite{qiu2016going}\cite{du2015shidiannao}. In these designs, the on-chip memory is implemented with SRAM, which means the size is quite limited. Thus external memory like DRAM is always needed in real applications, which means a large energy cost on the off-chip data transfer. This energy cost greatly limits the energy efficiency of this kind of design.
+
+One solution to reduce memory access is to perform in memory computing. RRAM cross bar based design is one of the popular research topics. Chi, et al. proposes the PRIME~\cite{chi2016prime} architecture which implements the matrix vector multiplication directly with the RRAM cross bar. Work by Cheng et al.~\cite{cheng2017time} implements the RRAM cross bar to support not only the inference but also the training phase of neural networks. In memory computation with RRAM shows great energy efficiency. But the application range of the design is limited by the scalability and computation accuracy of the RRAM cross bar.
+
+Another way to reduce off-chip data transfer is to implement large on-chip memory, where RRAM is a good candidate. We compare RRAM with SRAM and DRAM in Table~\ref{tab:ram} according to the performance reported in \cite{ee598, fackenthal201419} and simulation result by NVSim~\cite{dong2014nvsim}. Compared with SRAM, the storage density of RRAM is similar to DRAM, which is about $20\times$ higher. Compared with DRAM, RRAM can be integrated on-chip while the former one can not.
+
+\input{table/ram.tex}
+
+But RRAM is also limited in some aspects. First, the I/O bandwidth of RRAM is smaller than SRAM. For applications like CPU cache, where latency is critical to performance, RRAM may not be a good choice. For CNN, the data access pattern is static. This means we can design data storage to achieve sequential access at run-time. So we can use more banks to compensate for the limited bandwidth.
+
+Second, the I/O dynamic energy cost of RRAM is high In this paper, we show that a simple implementation with RRAM increase the total system energy cost. But there is chance that we utilize the property of CNN computation to reduce on-chip memory access to overcome the energy overhead of using RRAM. 
+
+In this paper, we introduce RRAM as the weight memory for a typical CNN accelerator design and optimize the design in hardware and scheduling level to overcome the RRAM energy overhead. The contributions of this paper is as follows:
+\begin{itemize}
+\item {Hardware optimization is proposed to reduce the RRAM dynamic energy overhead.}
+\item {Dedicated scheduling strategy optimization is proposed to fully utilize the large RRAM buffer to reduce off-chip data transfer.}
+\item {Design space exploration is done with state-of-the-art networks to show the effect of using RRAM as on-chip buffer.}
+\end{itemize}
+Experimental results on state-of-the-art CNN models show that RRAM based design saves $12-18\%$ system energy with a $15-75\%$ smaller on-chip RAM area compared with SRAM design. The proposed hardware and scheduling optimization reduces up to 96\% on-chip RAM access energy and 98\% off-chip data transfer.
+
+The rest of this paper is organized as follows: Section~\ref{sec:related} introduces the related work for CNN accelerator and RRAM research. Section~\ref{sec:hw} introduces the hardware design. The scheduling strategies are introduced in section~\ref{sec:schedule}. The experimental results are shown in section~\ref{sec:exp}. Section~\ref{sec:conclusion} concludes this paper.

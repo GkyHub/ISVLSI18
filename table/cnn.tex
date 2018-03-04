@@ -1,0 +1,20 @@
+\begin{table}[t]
+  \centering
+  \caption{Computation complexity and parameter size of state-of-the-art networks.}
+    \vspace{-5pt}
+    \begin{tabular}{|r|r|r|r|r|r|r|}
+    \hline
+    \multicolumn{1}{|c|}{\multirow{2}[4]{*}{}} & \multicolumn{3}{c|}{Computation (GOP)} & \multicolumn{3}{c|}{Parameter (M)} \\
+\cline{2-7}    \multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{CNV} & \multicolumn{1}{c|}{FC} & \multicolumn{1}{c|}{Total} & \multicolumn{1}{c|}{CNV} & \multicolumn{1}{c|}{FC} & \multicolumn{1}{c|}{Total} \\
+    \hline
+    AlexNet~\cite{krizhevsky2012imagenet} & 1.33  & 0.12  & 1.45  & 2.33  & 58.62 & 60.95  \\
+    \hline
+    VGG-11~\cite{simonyan2014very} & 14.97 & 0.25  & 15.22 & 9.22  & 123.63 & 132.85  \\
+    \hline
+    VGG-16~\cite{simonyan2014very} & 30.69 & 0.25  & 30.94 & 14.71 & 123.63 & 138.34  \\
+    \hline
+    ResNet-34~\cite{he2015deep} & 7.28  & 0.001 & 7.281 & 21.1  & 0.51  & 21.61  \\
+    \hline
+    \end{tabular}
+  \label{tab:cnn}
+\end{table}
