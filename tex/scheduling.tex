@@ -1,5 +1,5 @@
 \section{Scheduling Strategy}\label{sec:schedule}
-In the previous section, we choose the loop execution order to reduce data access. In this section, we analyze schedule strategy, which decides the off-chip data transfer behavior during the process of a network. Three kinds of schedule is considered: single-layer, cross-layer and fixing weight on-chip.
+In the previous section, we choose the loop execution order to reduce data access. In this section, we analyze schedule strategy, which decides the off-chip data transfer behavior during the process of a network. Three kinds of scheduling are considered: single-layer, cross-layer and fixing weight on-chip.
 
 \begin{figure}[t]
   \centering
@@ -10,7 +10,7 @@ In the previous section, we choose the loop execution order to reduce data acces
   \vspace{-5pt}
 \end{figure}
 
-{\bf{Single-layer Schedule Strategy}.} In the case where on-chip buffer size is smaller than the weight size and feature map size of a single-layer, data needs to be loaded multiple times. An example is shown in Figure~\ref{fig:single_layer} where the weight buffer can hold only $1/4$ of the weight and input buffer can hold only $1/3$ of the feature maps. Choosing reuse weights or reuse feature map will cause difference on data transfer behavior and further affects the data transfer energy and data transfer time.
+{\bf{Single-layer Schedule Strategy}.} In the case where on-chip buffer size is smaller than the weight size and feature map size of a single-layer, data needs to be loaded multiple times. An example is shown in Figure~\ref{fig:single_layer} where the weight buffer can hold only $1/4$ of the weight and input buffer can hold only $1/3$ of the feature maps. Choosing reuse weights or reuse feature map will cause a difference in data transfer behavior and further affects the data transfer energy and data transfer time.
 
 \begin{figure}[t]
   \centering
@@ -23,7 +23,7 @@ In the previous section, we choose the loop execution order to reduce data acces
 
 {\bf{Cross-layer Schedule Strategy}.} As suggested by~\cite{alwani2016fused}, when the network is processed layer by layer, the result of one layer needs to be written back to external memory it is larger than the output buffer. But if the weight buffer is large enough to contain more than one layers' weight, these layers can be scheduled together to avoid writing the intermediate layers result to external memory. An example is shown in Figure~\ref{fig:cross_layer}, where the cross-layer schedule avoids the second layer's feature map to be transferred to and from external memory. As we will implement weight buffer with RRAM, the size of weight buffer can be much larger and thus benefits from this strategy.
 
-{\bf{Fixing Weight On-chip}.} An observation is that if the weight buffer is large enough to hold all the layer's weight on-chip, no weight will need to be read from external memory. With a slightly smaller buffer, we can still follow this idea by fix some of the layer's weights in on-chip buffer to reduce external memory access. So we need to find which layers' weight is to be fixed in the buffer as to minimize the total energy cost.
+{\bf{Fixing Weight On-chip}.} An observation is that if the weight buffer is large enough to hold all the layer's weight on-chip, no weight will need to be read from external memory. With a slightly smaller buffer, we can still follow this idea by fix some of the layer's weights in the on-chip buffer to reduce external memory access. So we need to find which layers' weight is to be fixed in the buffer as to minimize the total energy cost.
 
 The solution space of this problem is binary tree of depth $(n+1)$. $n$ denotes the number of CNV layers in the network. To avoid searching the whole $O(2^n)$ solution space, we prune the binary tree with the buffer size limitation. If the the weights on a path already exceeds the weight buffer size, we ignore the search of its subtree. The pseudo code of the optimization process is as follows:
 
